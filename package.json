@@ -1,0 +1,19 @@
+{
+  "name": "asiapi",
+  "version": "1.0.0",
+  "description": "api for ASI",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "asi",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request" : "^2.72.0"
+  }
+}
