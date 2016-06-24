@@ -5,6 +5,8 @@ var repoFilter = require('./repoFilter');
 
 var app = express();
 
+var port = process.env.PORT || 8080;
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -29,7 +31,8 @@ app.get('/user/:handle', function (req, res) {
 	summary = summary.toLowerCase() === 'true';
 
 	request({headers: {'User-Agent': 'asiapi'}, url: url, json: true}, function(error, response, body) {
-		
+		console.log(util.format('request from ', req.headers.host));
+
 		if (!error && response.statusCode === 200) {
 			var ret = repoFilter.filter(
 			{repos : body, 
@@ -38,6 +41,7 @@ app.get('/user/:handle', function (req, res) {
 			
 		}
 		else {
+			console.error("something went wrong");
 			ret = body;
 		}
 		res.json(ret);
@@ -45,6 +49,6 @@ app.get('/user/:handle', function (req, res) {
   
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(port, function () {
+  console.log('asiapi listening on port:', port);
 });
