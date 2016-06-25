@@ -31,18 +31,34 @@ var filterTop = function (repos, top) {
 
 var filter = function (options) {
 	
-	var repos = options.repos;
+	var opt = normalizeFilterInput(options);
 
-	//0 not allowed
-	var top = options.top || defaultTop;
+	var repos = filterTop(opt.repos, opt.top);
 
-	var repos = filterTop(repos,top);
-
-	if (options.summary) {
+	if (opt.summary) {
 		repos  = summarize(repos);
 	}
 
 	return repos;
+}
+
+var normalizeFilterInput = function (options) {
+	var opt = {};
+
+	if (options instanceof Array) {
+		opt.repos = options;
+		opt.summary = false;
+		opt.top = defaultTop;
+	}
+	else if (options instanceof Object) {
+		opt.repos = options.repos;
+		opt.summary = options.summary;
+
+		//0 is not allowed
+		opt.top = options.top || defaultTop;
+	}
+
+	return opt;
 }
 
 
