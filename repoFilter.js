@@ -19,6 +19,7 @@ var summarize = function (repos) {
 
 var filterTop = function (repos, top) {
 	
+
 	repos.sort(function(a, b) {
     	return parseFloat(b.size) - parseFloat(a.size);
 	});
@@ -33,9 +34,16 @@ var filter = function (options) {
 	
 	var opt = normalizeFilterInput(options);
 
-	var repos = filterTop(opt.repos, opt.top);
+	var top = defaultTop;
+	
+	//top <=0 not allowed
+	if (options.top && options.top > 0) {
+		top = options.top;
+	}
 
-	if (opt.summary) {
+	var repos = filterTop(opt.repos,top);
+
+	if (options.summary ) {
 		repos  = summarize(repos);
 	}
 
@@ -44,6 +52,7 @@ var filter = function (options) {
 
 var normalizeFilterInput = function (options) {
 	var opt = {};
+
 
 	if (options instanceof Array) {
 		opt.repos = options;

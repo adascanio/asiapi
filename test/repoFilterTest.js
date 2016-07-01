@@ -11,9 +11,11 @@ describe("List Repos filter", function() {
 
 	beforeEach(function(){
 		repos = _.clone(repositories);
+
 	});
 
     it("gets five repos out of many more by default", function() {
+
 
    		var ret = testee.filter(repos);
    		assert.equal(ret.length, 5);
